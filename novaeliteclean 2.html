@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOVA Elite Clean | Cleaning Is An Art</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink:       #09111f;
+      --ink-mid:   #0e1e35;
+      --ink-soft:  #162840;
+      --gold:      #b8973a;
+      --gold-hi:   #d4af55;
+      --gold-pale: #ede0b8;
+      --cream:     #f7f3ea;
+      --muted:     #7a8fa8;
+      --white:     #ffffff;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--white);
+      font-family: 'Raleway', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+    }
+
+    /* ─── GRAIN OVERLAY ─── */
+    body::after {
+      content:'';
+      position:fixed; inset:0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events:none; z-index:999; opacity:.6;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width:4px; }
+    ::-webkit-scrollbar-track { background:var(--ink); }
+    ::-webkit-scrollbar-thumb { background:var(--gold); border-radius:2px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:200;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1.6rem 6%;
+      transition: background .4s, padding .4s, border-color .4s;
+    }
+
+    nav.scrolled {
+      background: rgba(9,17,31,.95);
+      backdrop-filter: blur(16px);
+      padding: 1rem 6%;
+      border-bottom: 1px solid rgba(184,151,58,.18);
+    }
+
+    .nav-wordmark {
+      display:flex; flex-direction:column; gap:1px;
+      text-decoration:none;
+    }
+
+    .nav-wordmark .top-line {
+      font-family:'Playfair Display', serif;
+      font-size:1.25rem;
+      font-weight:700;
+      letter-spacing:.12em;
+      color:var(--white);
+      text-transform:uppercase;
+    }
+
+    .nav-wordmark .sub-line {
+      font-size:.58rem;
+      font-weight:600;
+      letter-spacing:.35em;
+      color:var(--gold);
+      text-transform:uppercase;
+    }
+
+    .nav-links {
+      display:flex; align-items:center; gap:2.4rem;
+      list-style:none;
+    }
+
+    .nav-links a {
+      font-size:.78rem; font-weight:600;
+      letter-spacing:.18em; text-transform:uppercase;
+      color:rgba(255,255,255,.6);
+      text-decoration:none;
+      transition:color .2s;
+      position:relative;
+    }
+
+    .nav-links a::after {
+      content:''; position:absolute; bottom:-3px; left:0;
+      width:0; height:1px; background:var(--gold);
+      transition:width .3s;
+    }
+
+    .nav-links a:hover { color:var(--white); }
+    .nav-links a:hover::after { width:100%; }
+
+    .nav-cta {
+      font-size:.75rem !important; font-weight:700 !important;
+      letter-spacing:.2em !important;
+      color:var(--gold) !important;
+      border:1px solid rgba(184,151,58,.5);
+      padding:.55rem 1.4rem;
+      transition:background .2s, border-color .2s !important;
+    }
+
+    .nav-cta::after { display:none !important; }
+    .nav-cta:hover { background:rgba(184,151,58,.1); border-color:var(--gold) !important; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height:100vh;
+      display:flex; flex-direction:column; justify-content:center;
+      padding:14rem 6% 8rem;
+      position:relative; overflow:hidden;
+    }
+
+    .hero-bg {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 120% 80% at 60% 30%, rgba(22,40,64,.7) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 50% at 15% 90%, rgba(184,151,58,.06) 0%, transparent 55%),
+        linear-gradient(160deg, #09111f 0%, #0e1e35 60%, #09111f 100%);
+    }
+
+    /* decorative horizontal rules */
+    .hero-rule-top {
+      position:absolute; top:28%; left:6%; right:6%;
+      height:1px;
+      background: linear-gradient(90deg, transparent, rgba(184,151,58,.25), transparent);
+    }
+
+    .hero-side-text {
+      position:absolute; right:5%; top:50%;
+      transform:translateY(-50%) rotate(90deg);
+      transform-origin:center center;
+      font-size:.6rem; letter-spacing:.4em; text-transform:uppercase;
+      color:rgba(184,151,58,.45); font-weight:600;
+      white-space:nowrap;
+    }
+
+    .hero-content { position:relative; z-index:1; max-width:900px; }
+
+    .hero-pre {
+      display:flex; align-items:center; gap:1rem;
+      margin-bottom:2.8rem;
+      animation: fadeUp .9s ease both;
+    }
+
+    .hero-pre-line { width:50px; height:1px; background:var(--gold); }
+
+    .hero-pre span {
+      font-size:.68rem; font-weight:700;
+      letter-spacing:.35em; text-transform:uppercase;
+      color:var(--gold);
+    }
+
+    .hero-h1 {
+      font-family:'Playfair Display', serif;
+      font-size: clamp(4rem, 9vw, 8.5rem);
+      font-weight:900;
+      line-height:1.05;
+      letter-spacing:-.01em;
+      margin-bottom:2.5rem;
+      animation: fadeUp .9s .1s ease both;
+    }
+
+    .hero-h1 .italic-line {
+      font-style:italic;
+      font-weight:400;
+      color:var(--gold-hi);
+      display:block;
+    }
+
+    .hero-bottom {
+      display:flex; align-items:flex-end; gap:4rem; flex-wrap:wrap;
+      margin-top:2rem;
+      animation: fadeUp .9s .2s ease both;
+    }
+
+    .hero-tagline {
+      font-family:'Playfair Display', serif;
+      font-style:italic;
+      font-size:1.25rem;
+      color:var(--gold-pale);
+      opacity:.85;
+    }
+
+    .hero-desc {
+      max-width:360px;
+      font-size:.88rem; line-height:1.8;
+      color:var(--muted);
+      font-weight:400;
+    }
+
+    .hero-actions {
+      display:flex; gap:1.2rem; align-items:center; flex-wrap:wrap;
+      margin-top:2.5rem;
+      animation: fadeUp .9s .3s ease both;
+    }
+
+    .btn-gold {
+      display:inline-block;
+      background: linear-gradient(135deg, var(--gold), var(--gold-hi));
+      color:var(--ink);
+      padding:.85rem 2.4rem;
+      font-size:.78rem; font-weight:700;
+      letter-spacing:.2em; text-transform:uppercase;
+      text-decoration:none;
+      transition:opacity .2s, transform .2s;
+      box-shadow:0 8px 32px rgba(184,151,58,.3);
+    }
+
+    .btn-gold:hover { opacity:.88; transform:translateY(-2px); }
+
+    .btn-ghost {
+      display:inline-block;
+      color:rgba(255,255,255,.7);
+      font-size:.78rem; font-weight:600;
+      letter-spacing:.18em; text-transform:uppercase;
+      text-decoration:none;
+      padding:.85rem 0;
+      border-bottom:1px solid rgba(255,255,255,.25);
+      transition:color .2s, border-color .2s;
+    }
+
+    .btn-ghost:hover { color:var(--white); border-color:var(--white); }
+
+    /* scroll indicator */
+    .scroll-cue {
+      position:absolute; bottom:2.5rem; left:50%;
+      transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:.5rem;
+      animation: fadeUp .9s .6s ease both;
+    }
+
+    .scroll-cue span {
+      font-size:.58rem; letter-spacing:.3em; text-transform:uppercase;
+      color:rgba(255,255,255,.3); font-weight:600;
+    }
+
+    .scroll-line {
+      width:1px; height:40px;
+      background:linear-gradient(180deg, var(--gold), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%,100% { opacity:.3; transform:scaleY(1); }
+      50% { opacity:1; transform:scaleY(1.15); }
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      height:1px;
+      background:linear-gradient(90deg, transparent 0%, rgba(184,151,58,.3) 30%, rgba(184,151,58,.3) 70%, transparent 100%);
+      margin:0 6%;
+    }
+
+    /* ─── TRUST STRIP ─── */
+    .trust-strip {
+      padding:2rem 6%;
+      display:flex; align-items:center; justify-content:center;
+      gap:0; flex-wrap:wrap;
+    }
+
+    .trust-item {
+      display:flex; align-items:center; gap:.75rem;
+      padding:0 2.5rem;
+      font-size:.7rem; font-weight:600;
+      letter-spacing:.15em; text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    .trust-item + .trust-item {
+      border-left:1px solid rgba(255,255,255,.08);
+    }
+
+    .trust-dot {
+      width:4px; height:4px; border-radius:50%;
+      background:var(--gold); flex-shrink:0;
+    }
+
+    /* ─── SECTION COMMONS ─── */
+    section { position:relative; z-index:1; }
+
+    .sec-label {
+      font-size:.65rem; font-weight:700;
+      letter-spacing:.35em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:1rem;
+      display:flex; align-items:center; gap:.75rem;
+    }
+    .sec-label::before {
+      content:''; width:24px; height:1px; background:var(--gold);
+    }
+
+    .sec-title {
+      font-family:'Playfair Display', serif;
+      font-size:clamp(2.2rem, 4.5vw, 3.8rem);
+      font-weight:700; line-height:1.1;
+    }
+
+    .sec-title em {
+      font-style:italic; font-weight:400;
+      color:var(--gold-hi);
+    }
+
+    /* ─── SERVICES ─── */
+    #services { padding:8rem 6%; }
+
+    .services-head {
+      display:flex; align-items:flex-end;
+      justify-content:space-between; gap:2rem;
+      margin-bottom:5rem; flex-wrap:wrap;
+    }
+
+    .services-head-right {
+      max-width:320px;
+      font-size:.9rem; line-height:1.8;
+      color:var(--muted); font-weight:400;
+    }
+
+    .services-grid {
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:1px;
+      background:rgba(184,151,58,.12);
+      border:1px solid rgba(184,151,58,.12);
+    }
+
+    .svc {
+      background:var(--ink-mid);
+      padding:2.8rem 2.2rem;
+      position:relative; overflow:hidden;
+      transition:background .35s;
+    }
+
+    .svc::after {
+      content:'';
+      position:absolute; bottom:0; left:0; right:0;
+      height:2px;
+      background:linear-gradient(90deg, var(--gold), var(--gold-hi));
+      transform:scaleX(0); transform-origin:left;
+      transition:transform .4s ease;
+    }
+
+    .svc:hover { background:var(--ink-soft); }
+    .svc:hover::after { transform:scaleX(1); }
+
+    .svc-number {
+      font-family:'Playfair Display', serif;
+      font-size:3.5rem; font-weight:900;
+      color:rgba(184,151,58,.1);
+      line-height:1;
+      margin-bottom:1.2rem;
+    }
+
+    .svc h3 {
+      font-size:1rem; font-weight:700;
+      letter-spacing:.06em; text-transform:uppercase;
+      color:var(--white);
+      margin-bottom:.8rem;
+    }
+
+    .svc p {
+      font-size:.84rem; line-height:1.75;
+      color:var(--muted);
+    }
+
+    .svc-tag {
+      display:inline-block; margin-top:1.2rem;
+      font-size:.62rem; font-weight:700;
+      letter-spacing:.2em; text-transform:uppercase;
+      color:var(--gold);
+      border-top:1px solid rgba(184,151,58,.3);
+      padding-top:.6rem;
+    }
+
+    /* ─── PROMISE ─── */
+    #promise {
+      padding:8rem 6%;
+      background:var(--ink-mid);
+      border-top:1px solid rgba(184,151,58,.12);
+      border-bottom:1px solid rgba(184,151,58,.12);
+    }
+
+    .promise-inner {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:6rem; align-items:center;
+    }
+
+    .promise-left .sec-title { margin-bottom:2rem; }
+
+    .promise-left p {
+      font-size:.9rem; line-height:1.85;
+      color:var(--muted); margin-bottom:2rem;
+    }
+
+    .pillars {
+      display:flex; flex-direction:column; gap:1.5rem;
+      margin-top:2.5rem;
+    }
+
+    .pillar {
+      display:flex; gap:1.5rem; align-items:flex-start;
+      padding-bottom:1.5rem;
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+
+    .pillar:last-child { border-bottom:none; padding-bottom:0; }
+
+    .pillar-mark {
+      flex-shrink:0;
+      width:1px; background:var(--gold);
+      height:48px; margin-top:4px;
+    }
+
+    .pillar-text h4 {
+      font-size:.88rem; font-weight:700;
+      letter-spacing:.06em; text-transform:uppercase;
+      margin-bottom:.35rem;
+    }
+
+    .pillar-text p {
+      font-size:.83rem; color:var(--muted);
+      line-height:1.7; margin:0 !important;
+    }
+
+    .promise-right {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:1px;
+      background:rgba(184,151,58,.12);
+      border:1px solid rgba(184,151,58,.12);
+    }
+
+    .stat-box {
+      background:var(--ink);
+      padding:2.5rem 2rem;
+      display:flex; flex-direction:column; justify-content:space-between;
+    }
+
+    .stat-box .stat-n {
+      font-family:'Playfair Display', serif;
+      font-size:3.2rem; font-weight:900;
+      color:var(--gold-hi); line-height:1;
+    }
+
+    .stat-box .stat-label {
+      font-size:.7rem; font-weight:600;
+      letter-spacing:.18em; text-transform:uppercase;
+      color:var(--muted); margin-top:.6rem;
+    }
+
+    .stat-box.featured {
+      background:linear-gradient(135deg, rgba(184,151,58,.12), rgba(184,151,58,.04));
+    }
+
+    /* ─── AREAS ─── */
+    #areas { padding:8rem 6%; }
+
+    .areas-inner {
+      display:grid; grid-template-columns:1fr 2fr;
+      gap:6rem; align-items:start;
+    }
+
+    .areas-left .sec-title { margin-bottom:1.5rem; }
+
+    .areas-left p {
+      font-size:.88rem; color:var(--muted);
+      line-height:1.8;
+    }
+
+    .areas-map-visual {
+      display:flex; flex-wrap:wrap; gap:.6rem;
+      padding-top:.5rem;
+    }
+
+    .area-tag {
+      font-size:.72rem; font-weight:600;
+      letter-spacing:.14em; text-transform:uppercase;
+      padding:.5rem 1.1rem;
+      border:1px solid rgba(184,151,58,.18);
+      color:rgba(255,255,255,.55);
+      transition:all .25s;
+      cursor:default;
+    }
+
+    .area-tag:hover, .area-tag.hero-tag {
+      border-color:var(--gold);
+      color:var(--gold-pale);
+      background:rgba(184,151,58,.07);
+    }
+
+    .area-tag.hero-tag {
+      color:var(--gold); font-weight:700;
+    }
+
+    /* ─── BOOKING ─── */
+    #booking {
+      padding:8rem 6%;
+      background:var(--ink-mid);
+      border-top:1px solid rgba(184,151,58,.12);
+    }
+
+    .booking-inner {
+      display:grid; grid-template-columns:1fr 1.3fr;
+      gap:6rem; align-items:start;
+    }
+
+    .booking-left .sec-title { margin-bottom:1.5rem; }
+
+    .booking-left p {
+      font-size:.9rem; line-height:1.85;
+      color:var(--muted); margin-bottom:2.5rem;
+    }
+
+    .contact-list {
+      list-style:none; display:flex; flex-direction:column; gap:1rem;
+    }
+
+    .contact-list li {
+      display:flex; align-items:center; gap:1rem;
+      font-size:.85rem; color:var(--muted);
+    }
+
+    .contact-list .c-label {
+      font-size:.6rem; font-weight:700;
+      letter-spacing:.2em; text-transform:uppercase;
+      color:var(--gold); min-width:70px;
+    }
+
+    /* FORM */
+    .form-wrap {
+      background:var(--ink);
+      border:1px solid rgba(184,151,58,.18);
+      padding:3rem;
+    }
+
+    .form-wrap h3 {
+      font-family:'Playfair Display', serif;
+      font-size:1.6rem; font-weight:700;
+      margin-bottom:2rem;
+      color:var(--white);
+    }
+
+    .f-row { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
+
+    .f-group { margin-bottom:1.2rem; }
+
+    .f-group label {
+      display:block;
+      font-size:.62rem; font-weight:700;
+      letter-spacing:.22em; text-transform:uppercase;
+      color:var(--muted); margin-bottom:.5rem;
+    }
+
+    .f-group input,
+    .f-group select,
+    .f-group textarea {
+      width:100%;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(184,151,58,.18);
+      padding:.8rem 1rem;
+      color:var(--white);
+      font-family:'Raleway', sans-serif;
+      font-size:.88rem; font-weight:400;
+      outline:none;
+      transition:border-color .25s, background .25s;
+      border-radius:0;
+      -webkit-appearance:none;
+    }
+
+    .f-group input:focus,
+    .f-group select:focus,
+    .f-group textarea:focus {
+      border-color:var(--gold);
+      background:rgba(184,151,58,.04);
+    }
+
+    .f-group select option { background:var(--ink-mid); }
+    .f-group textarea { resize:vertical; min-height:100px; }
+
+    .f-submit {
+      width:100%; margin-top:.5rem;
+      background:linear-gradient(135deg, var(--gold), var(--gold-hi));
+      color:var(--ink);
+      border:none; padding:1.1rem;
+      font-family:'Raleway', sans-serif;
+      font-size:.78rem; font-weight:700;
+      letter-spacing:.25em; text-transform:uppercase;
+      cursor:pointer;
+      transition:opacity .2s, transform .2s;
+      box-shadow:0 8px 30px rgba(184,151,58,.25);
+    }
+
+    .f-submit:hover { opacity:.9; transform:translateY(-1px); }
+
+    .f-note {
+      text-align:center; margin-top:1rem;
+      font-size:.7rem; color:rgba(255,255,255,.25);
+      letter-spacing:.06em;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top:1px solid rgba(184,151,58,.15);
+      padding:4rem 6% 2.5rem;
+    }
+
+    .footer-top {
+      display:grid; grid-template-columns:2fr 1fr 1fr;
+      gap:4rem; margin-bottom:3rem;
+    }
+
+    .footer-brand .wm-top {
+      font-family:'Playfair Display', serif;
+      font-size:1.5rem; font-weight:700;
+      letter-spacing:.1em; text-transform:uppercase;
+      color:var(--white); display:block; margin-bottom:.3rem;
+    }
+
+    .footer-brand .wm-sub {
+      font-size:.58rem; font-weight:700;
+      letter-spacing:.35em; text-transform:uppercase;
+      color:var(--gold); display:block; margin-bottom:1.2rem;
+    }
+
+    .footer-brand p {
+      font-size:.83rem; color:var(--muted);
+      line-height:1.75; max-width:280px;
+    }
+
+    .footer-col h4 {
+      font-size:.62rem; font-weight:700;
+      letter-spacing:.3em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:1.2rem;
+    }
+
+    .footer-col ul { list-style:none; }
+    .footer-col li { margin-bottom:.6rem; }
+    .footer-col a {
+      font-size:.82rem; color:var(--muted);
+      text-decoration:none; transition:color .2s;
+    }
+    .footer-col a:hover { color:var(--gold-pale); }
+
+    .footer-bottom {
+      border-top:1px solid rgba(255,255,255,.06);
+      padding-top:1.8rem;
+      display:flex; justify-content:space-between;
+      align-items:center; flex-wrap:wrap; gap:1rem;
+    }
+
+    .footer-bottom p {
+      font-size:.72rem; color:rgba(255,255,255,.25);
+      letter-spacing:.06em;
+    }
+
+    .footer-bottom a { color:var(--gold); text-decoration:none; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(28px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ─── MOBILE ─── */
+    @media (max-width:900px) {
+      .nav-links { display:none; }
+      .hero { padding:0 6% 5rem; }
+      .services-grid { grid-template-columns:1fr 1fr; }
+      .promise-inner,
+      .areas-inner,
+      .booking-inner { grid-template-columns:1fr; gap:3rem; }
+      .promise-right { grid-template-columns:1fr 1fr; }
+      .footer-top { grid-template-columns:1fr 1fr; }
+      .services-head { flex-direction:column; align-items:flex-start; }
+      .hero-side-text { display:none; }
+      .trust-item { padding:0 1.2rem; font-size:.65rem; }
+    }
+
+    @media (max-width:600px) {
+      .services-grid { grid-template-columns:1fr; }
+      .f-row { grid-template-columns:1fr; }
+      .footer-top { grid-template-columns:1fr; }
+      .trust-strip { flex-direction:column; gap:1rem; }
+      .trust-item + .trust-item { border-left:none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-wordmark">
+    <span class="top-line">NOVA Elite Clean</span>
+    <span class="sub-line">novaeliteclean.com</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#promise">Our Promise</a></li>
+    <li><a href="#areas">Areas</a></li>
+    <li><a href="#booking" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-rule-top"></div>
+  <div class="hero-side-text">Northern Virginia · DC · Maryland</div>
+
+  <div class="hero-content">
+    <div class="hero-pre">
+      <div class="hero-pre-line"></div>
+      <span>Professional Cleaning Services · DMV Region</span>
+    </div>
+    <h1 class="hero-h1">
+      NOVA<br>
+      <span class="italic-line">Elite Clean</span>
+    </h1>
+    <div class="hero-bottom">
+      <p class="hero-tagline">Cleaning Is An Art.</p>
+      <p class="hero-desc">
+        Precision cleaning for homes and businesses across Northern Virginia, Washington DC, and Maryland. Where every detail is intentional and every space is transformed.
+      </p>
+    </div>
+    <div class="hero-actions">
+      <a href="#booking" class="btn-gold">Request a Quote</a>
+      <a href="#services" class="btn-ghost">View Services</a>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="divider"></div>
+<div class="trust-strip">
+  <div class="trust-item"><span class="trust-dot"></span>Insured &amp; Professional</div>
+  <div class="trust-item"><span class="trust-dot"></span>Satisfaction Guaranteed</div>
+  <div class="trust-item"><span class="trust-dot"></span>4-Hour Minimum</div>
+  <div class="trust-item"><span class="trust-dot"></span>2-Person Teams</div>
+  <div class="trust-item"><span class="trust-dot"></span>Premium Equipment</div>
+</div>
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-head">
+    <div>
+      <div class="sec-label">What We Offer</div>
+      <h2 class="sec-title">Services Built<br>for <em>Every Space</em></h2>
+    </div>
+    <p class="services-head-right">
+      From routine maintenance to deep restorations, each service is delivered with the same standard of excellence — meticulous, efficient, and results-driven.
+    </p>
+  </div>
+  <div class="services-grid">
+    <div class="svc">
+      <div class="svc-number">01</div>
+      <h3>Standard Clean</h3>
+      <p>Routine maintenance for homes and apartments. Kitchens, bathrooms, living areas and bedrooms kept consistently pristine.</p>
+      <div class="svc-tag">Most Popular</div>
+    </div>
+    <div class="svc">
+      <div class="svc-number">02</div>
+      <h3>Deep Clean</h3>
+      <p>A thorough, top-to-bottom treatment for spaces that need extra attention. The ideal starting point for new clients.</p>
+      <div class="svc-tag">Recommended First Visit</div>
+    </div>
+    <div class="svc">
+      <div class="svc-number">03</div>
+      <h3>Move-In / Move-Out</h3>
+      <p>Leave your old place spotless or arrive to a pristine new home. Every corner handled so you can focus on the transition.</p>
+      <div class="svc-tag">Flat Rate Available</div>
+    </div>
+    <div class="svc">
+      <div class="svc-number">04</div>
+      <h3>Commercial Clean</h3>
+      <p>Offices and small commercial spaces. Flexible scheduling — early morning, evening, or weekend visits available.</p>
+      <div class="svc-tag">Recurring Discounts</div>
+    </div>
+    <div class="svc">
+      <div class="svc-number">05</div>
+      <h3>Post-Event Clean</h3>
+      <p>After the gathering, we restore your space to its pre-event condition quickly and thoroughly. Same-day available.</p>
+      <div class="svc-tag">Same-Day Available</div>
+    </div>
+    <div class="svc">
+      <div class="svc-number">06</div>
+      <h3>Recurring Service</h3>
+      <p>Weekly, bi-weekly, or monthly plans with consistent teams and preferred-client rates for loyal customers.</p>
+      <div class="svc-tag">Save Up to 15%</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMISE -->
+<section id="promise">
+  <div class="promise-inner">
+    <div class="promise-left">
+      <div class="sec-label">Our Promise</div>
+      <h2 class="sec-title">The <em>Standard</em><br>Others Aim For</h2>
+      <p>We built NOVA Elite Clean on a simple belief: a clean space is a cared-for space. That means showing up consistently, communicating clearly, and delivering results that speak for themselves.</p>
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-mark"></div>
+          <div class="pillar-text">
+            <h4>Professional 2-Person Teams</h4>
+            <p>Every job handled by a trained, vetted 2-person team — efficient, thorough, and accountable.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-mark"></div>
+          <div class="pillar-text">
+            <h4>Premium Equipment</h4>
+            <p>Rainbow vacuum systems and professional-grade supplies brought to every job, every time.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-mark"></div>
+          <div class="pillar-text">
+            <h4>Transparent Pricing</h4>
+            <p>Honest hourly rates. No hidden fees. You'll know exactly what you're paying before we arrive.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-mark"></div>
+          <div class="pillar-text">
+            <h4>Satisfaction Guarantee</h4>
+            <p>If something isn't right, we come back and make it right. No questions, no excuses.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="promise-right">
+      <div class="stat-box featured">
+        <div class="stat-n">100%</div>
+        <div class="stat-label">Satisfaction Guarantee</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-n">3</div>
+        <div class="stat-label">States Served<br>VA · DC · MD</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-n">4hr</div>
+        <div class="stat-label">Minimum Per Visit</div>
+      </div>
+      <div class="stat-box featured">
+        <div class="stat-n">2×</div>
+        <div class="stat-label">Faster with Our<br>2-Person Teams</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AREAS -->
+<section id="areas">
+  <div class="areas-inner">
+    <div class="areas-left">
+      <div class="sec-label">Coverage</div>
+      <h2 class="sec-title">Serving the<br><em>DMV Region</em></h2>
+      <p>From Northern Virginia suburbs to the heart of DC and across Maryland — if you're in the DMV, we've got you covered.</p>
+    </div>
+    <div class="areas-map-visual">
+      <span class="area-tag hero-tag">Northern Virginia</span>
+      <span class="area-tag hero-tag">Washington DC</span>
+      <span class="area-tag hero-tag">Maryland</span>
+      <span class="area-tag">Fairfax</span>
+      <span class="area-tag">Arlington</span>
+      <span class="area-tag">Alexandria</span>
+      <span class="area-tag">McLean</span>
+      <span class="area-tag">Reston</span>
+      <span class="area-tag">Herndon</span>
+      <span class="area-tag">Sterling</span>
+      <span class="area-tag">Ashburn</span>
+      <span class="area-tag">Tysons</span>
+      <span class="area-tag">Bethesda</span>
+      <span class="area-tag">Silver Spring</span>
+      <span class="area-tag">Rockville</span>
+      <span class="area-tag">Chevy Chase</span>
+      <span class="area-tag">Potomac</span>
+      <span class="area-tag">Gaithersburg</span>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="booking-inner">
+    <div class="booking-left">
+      <div class="sec-label">Get Started</div>
+      <h2 class="sec-title">Request<br>a <em>Quote</em></h2>
+      <p>Fill out the form and we'll respond within 24 hours with a custom quote for your space. No pressure, no obligation.</p>
+      <ul class="contact-list">
+        <li><span class="c-label">Phone</span> (443) 432-5217</li>
+        <li><span class="c-label">Web</span> novaeliteclean.com</li>
+        <li><span class="c-label">Region</span> Northern VA · DC · MD</li>
+        <li><span class="c-label">Minimum</span> 4-Hour per Visit</li>
+      </ul>
+    </div>
+    <div class="form-wrap">
+      <h3>Tell Us About Your Space</h3>
+      <div class="f-row">
+        <div class="f-group"><label>First Name</label><input type="text" placeholder="Jane" /></div>
+        <div class="f-group"><label>Last Name</label><input type="text" placeholder="Smith" /></div>
+      </div>
+      <div class="f-row">
+        <div class="f-group"><label>Phone</label><input type="tel" placeholder="(xxx) xxx-xxxx" /></div>
+        <div class="f-group"><label>Email</label><input type="email" placeholder="jane@email.com" /></div>
+      </div>
+      <div class="f-group">
+        <label>Service Type</label>
+        <select>
+          <option value="">Select a service...</option>
+          <option>Standard Clean</option>
+          <option>Deep Clean</option>
+          <option>Move-In / Move-Out</option>
+          <option>Commercial Clean</option>
+          <option>Post-Event Clean</option>
+          <option>Recurring Service</option>
+        </select>
+      </div>
+      <div class="f-row">
+        <div class="f-group"><label>City / Area</label><input type="text" placeholder="e.g. Fairfax, VA" /></div>
+        <div class="f-group"><label>Approx. Sq. Footage</label><input type="text" placeholder="e.g. 1,500 sq ft" /></div>
+      </div>
+      <div class="f-group">
+        <label>Additional Notes</label>
+        <textarea placeholder="Specific needs, preferred dates, any details that would help us..."></textarea>
+      </div>
+      <button class="f-submit">Send Quote Request</button>
+      <p class="f-note">Response within 24 hours · No spam, ever</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="wm-top">NOVA Elite Clean</span>
+      <span class="wm-sub">novaeliteclean.com</span>
+      <p>Professional cleaning services for the DMV region. Where every detail matters and every space deserves to shine.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Standard Clean</a></li>
+        <li><a href="#services">Deep Clean</a></li>
+        <li><a href="#services">Move-In / Move-Out</a></li>
+        <li><a href="#services">Commercial Clean</a></li>
+        <li><a href="#services">Recurring Service</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:4434325217">(443) 432-5217</a></li>
+        <li><a href="#booking">Get a Quote</a></li>
+        <li><a href="#areas">Service Areas</a></li>
+        <li><a href="https://novaeliteclean.com">novaeliteclean.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 NOVA Elite Clean · All rights reserved</p>
+    <p>EIN 42-2791725 · <a href="https://novaeliteclean.com">novaeliteclean.com</a> · <a href="tel:4434325217">(443) 432-5217</a></p>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll effect
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+</script>
+
+</body>
+</html>
