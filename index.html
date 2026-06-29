@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -165,7 +164,7 @@
 
     .hero-h1 {
       font-family:'Playfair Display', serif;
-      font-size: clamp(4rem, 9vw, 8.5rem);
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
       font-weight:900;
       line-height:1.05;
       letter-spacing:-.01em;
@@ -687,6 +686,46 @@
       .trust-item { padding:0 1.2rem; font-size:.65rem; }
     }
 
+    /* ─── JOBBER BLOCK ─── */
+    .jobber-wrap {
+      background: linear-gradient(135deg, rgba(184,151,58,.1), rgba(184,151,58,.04));
+      border: 1px solid rgba(184,151,58,.35);
+      padding: 2.8rem 3rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .jobber-label {
+      font-size:.62rem; font-weight:700;
+      letter-spacing:.3em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:.6rem;
+    }
+    .jobber-title {
+      font-family:'Playfair Display', serif;
+      font-size:1.7rem; font-weight:700;
+      color:var(--white); margin-bottom:.9rem;
+    }
+    .jobber-desc {
+      font-size:.85rem; line-height:1.75;
+      color:var(--muted); max-width:420px;
+      margin:0 auto 1.8rem;
+    }
+    .jobber-btn {
+      display:inline-block;
+      padding:.9rem 2.6rem;
+      font-size:.78rem;
+    }
+    .jobber-divider {
+      display:flex; align-items:center; gap:1rem;
+      margin-top:2rem; color:rgba(255,255,255,.18);
+      font-size:.68rem; letter-spacing:.2em; text-transform:uppercase;
+    }
+    .jobber-divider::before,
+    .jobber-divider::after {
+      content:''; flex:1;
+      height:1px; background:rgba(184,151,58,.2);
+    }
+    .jobber-divider span { white-space:nowrap; color:rgba(255,255,255,.3); }
+
     @media (max-width:600px) {
       .services-grid { grid-template-columns:1fr; }
       .f-row { grid-template-columns:1fr; }
@@ -750,7 +789,7 @@
 <div class="trust-strip">
   <div class="trust-item"><span class="trust-dot"></span>Insured &amp; Professional</div>
   <div class="trust-item"><span class="trust-dot"></span>Satisfaction Guaranteed</div>
-  <div class="trust-item"><span class="trust-dot"></span>4-Hour Minimum</div>
+  <div class="trust-item"><span class="trust-dot"></span>Priced by Bed &amp; Sq Ft</div>
   <div class="trust-item"><span class="trust-dot"></span>2-Person Teams</div>
   <div class="trust-item"><span class="trust-dot"></span>Premium Equipment</div>
 </div>
@@ -833,7 +872,7 @@
           <div class="pillar-mark"></div>
           <div class="pillar-text">
             <h4>Transparent Pricing</h4>
-            <p>Honest hourly rates. No hidden fees. You'll know exactly what you're paying before we arrive.</p>
+            <p>Flat per-job rates. No hidden fees. You'll know exactly what you're paying before we arrive.</p>
           </div>
         </div>
         <div class="pillar">
@@ -855,8 +894,8 @@
         <div class="stat-label">States Served<br>VA · DC · MD</div>
       </div>
       <div class="stat-box">
-        <div class="stat-n">4hr</div>
-        <div class="stat-label">Minimum Per Visit</div>
+        <div class="stat-n">Flat</div>
+        <div class="stat-label">Per-Job Pricing<br>by Bed &amp; Sq Ft</div>
       </div>
       <div class="stat-box featured">
         <div class="stat-n">2×</div>
@@ -908,22 +947,30 @@
         <li><span class="c-label">Phone</span> (443) 432-5217</li>
         <li><span class="c-label">Web</span> novaeliteclean.com</li>
         <li><span class="c-label">Region</span> Northern VA · DC · MD</li>
-        <li><span class="c-label">Minimum</span> 4-Hour per Visit</li>
+        <li><span class="c-label">Pricing</span> Flat rate by bedrooms &amp; sq footage</li>
       </ul>
     </div>
+    <div class="jobber-wrap">
+      <div class="jobber-label">Already a Client?</div>
+      <h3 class="jobber-title">Sign In &amp; Book Online</h3>
+      <p class="jobber-desc">Returning clients can log in to your Jobber portal to schedule a service, choose from available options, and manage appointments — all in one place.</p>
+      <a href="YOUR_JOBBER_BOOKING_URL" target="_blank" class="btn-gold jobber-btn">Book Through Jobber</a>
+      <div class="jobber-divider"><span>or request a quote below</span></div>
+    </div>
+
     <div class="form-wrap">
       <h3>Tell Us About Your Space</h3>
       <div class="f-row">
-        <div class="f-group"><label>First Name</label><input type="text" placeholder="Jane" /></div>
-        <div class="f-group"><label>Last Name</label><input type="text" placeholder="Smith" /></div>
+        <div class="f-group"><label>First Name</label><input type="text" id="f-fname" placeholder="Jane" /></div>
+        <div class="f-group"><label>Last Name</label><input type="text" id="f-lname" placeholder="Smith" /></div>
       </div>
       <div class="f-row">
-        <div class="f-group"><label>Phone</label><input type="tel" placeholder="(xxx) xxx-xxxx" /></div>
-        <div class="f-group"><label>Email</label><input type="email" placeholder="jane@email.com" /></div>
+        <div class="f-group"><label>Phone</label><input type="tel" id="f-phone" placeholder="(xxx) xxx-xxxx" /></div>
+        <div class="f-group"><label>Email</label><input type="email" id="f-email" placeholder="jane@email.com" /></div>
       </div>
       <div class="f-group">
         <label>Service Type</label>
-        <select>
+        <select id="f-service">
           <option value="">Select a service...</option>
           <option>Standard Clean</option>
           <option>Deep Clean</option>
@@ -934,14 +981,25 @@
         </select>
       </div>
       <div class="f-row">
-        <div class="f-group"><label>City / Area</label><input type="text" placeholder="e.g. Fairfax, VA" /></div>
-        <div class="f-group"><label>Approx. Sq. Footage</label><input type="text" placeholder="e.g. 1,500 sq ft" /></div>
+        <div class="f-group"><label>City / Area</label><input type="text" id="f-city" placeholder="e.g. Fairfax, VA" /></div>
+        <div class="f-group"><label>Approx. Sq. Footage</label><input type="text" id="f-sqft" placeholder="e.g. 1,500 sq ft" /></div>
+      </div>
+      <div class="f-group">
+        <label>Number of Bedrooms</label>
+        <select id="f-beds">
+          <option value="">Select bedrooms...</option>
+          <option>1 Bedroom</option>
+          <option>2 Bedrooms</option>
+          <option>3 Bedrooms</option>
+          <option>4 Bedrooms</option>
+          <option>5+ Bedrooms</option>
+        </select>
       </div>
       <div class="f-group">
         <label>Additional Notes</label>
-        <textarea placeholder="Specific needs, preferred dates, any details that would help us..."></textarea>
+        <textarea id="f-notes" placeholder="Specific needs, preferred dates, any details that would help us..."></textarea>
       </div>
-      <button class="f-submit">Send Quote Request</button>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScog8N7bGZyv_0QmIe5V-7P5znTO2NOlRvMx6kIlm8zKYxZXQ/viewform?usp=publish-editor" target="_blank" class="f-submit" style="display:block;text-align:center;text-decoration:none;">Request a Quote</a>
       <p class="f-note">Response within 24 hours · No spam, ever</p>
     </div>
   </div>
@@ -987,6 +1045,38 @@
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
   });
+
+  // Quote form → mailto
+  function submitQuote() {
+    const fname   = document.getElementById('f-fname').value.trim();
+    const lname   = document.getElementById('f-lname').value.trim();
+    const phone   = document.getElementById('f-phone').value.trim();
+    const email   = document.getElementById('f-email').value.trim();
+    const service = document.getElementById('f-service').value;
+    const city    = document.getElementById('f-city').value.trim();
+    const sqft    = document.getElementById('f-sqft').value.trim();
+    const beds    = document.getElementById('f-beds').value;
+    const notes   = document.getElementById('f-notes').value.trim();
+
+    if (!fname || !email) {
+      alert('Please enter at least your name and email so we can reach you.');
+      return;
+    }
+
+    const subject = encodeURIComponent('Quote Request – NOVA Elite Clean');
+    const body = encodeURIComponent(
+      'Name: ' + fname + ' ' + lname + '\n' +
+      'Phone: ' + (phone || 'Not provided') + '\n' +
+      'Email: ' + email + '\n\n' +
+      'Service: ' + (service || 'Not selected') + '\n' +
+      'Bedrooms: ' + (beds || 'Not selected') + '\n' +
+      'Sq Footage: ' + (sqft || 'Not provided') + '\n' +
+      'City/Area: ' + (city || 'Not provided') + '\n\n' +
+      'Notes:\n' + (notes || 'None')
+    );
+
+    window.location.href = 'mailto:gigicompton7110@gmail.com?subject=' + subject + '&body=' + body;
+  }
 </script>
 
 </body>
